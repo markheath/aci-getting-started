@@ -19,7 +19,7 @@ $acrPassword = (az acr credential show --name $acrName --query "passwords[0].val
 $containerGroupName = "aci-acr"
 az container create --resource-group $resourceGroup --name $containerGroupName --image $imageTag `
     --cpu 1 --memory 1 --registry-username $acrUser --registry-password $acrPassword `
-    --dns-name-label aci-arc --ports 80
+    --dns-name-label aci-acr --ports 80
 
 
 $fqdn = az container show -g $resourceGroup -n $containerGroupName --query ipAddress.fqdn -o tsv

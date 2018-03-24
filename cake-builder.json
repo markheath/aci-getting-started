@@ -1,0 +1,97 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "containerGroupName": {
+            "type": "string",
+            "defaultValue": "myContainerGroup",
+            "metadata": {
+                "description": "Name for the container group"
+            }
+        },
+        "KUDU_CLIENT_BASEURI": {
+            "type": "string",
+            "metadata": {
+                "description": "Base URI for Kudu deployment"
+            }
+        },
+        "KUDU_CLIENT_USERNAME": {
+            "type": "string",
+            "metadata": {
+                "description": "Username for Kudu deployment"
+            }
+        },
+        "KUDU_CLIENT_PASSWORD": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Password for Kudu deployment."
+            }
+        },
+        "commandLine": {
+            "type": "string",
+            "defaultValue": "./build.sh -Target=Default --settings_skipverification=true",
+            "metadata": {
+                "description": "Password for Kudu deployment."
+            }
+
+        }
+    },
+    "variables": {
+      "container1name": "cakebuilder",
+      "container1image": "markheath/cakebuilder:0.1"
+    },
+    "resources": [
+      {
+        "name": "volume-demo-gitrepo",
+        "type": "Microsoft.ContainerInstance/containerGroups",
+        "apiVersion": "2018-02-01-preview",
+        "location": "[resourceGroup().location]",
+        "properties": {
+          "containers": [
+            {
+              "name": "[variables('container1name')]",
+              "properties": {
+                "image": "[variables('container1image')]",
+                "command": ["[parameters('commandLine')]"],
+                "resources": {
+                  "requests": {
+                    "cpu": 1,
+                    "memoryInGb": 2
+                  }
+                },
+                "volumeMounts": [
+                  {
+                    "name": "gitrepo1",
+                    "mountPath": "/src"
+                  }
+                ],
+                "environmentVariables": [
+                    {
+                        "name": "KUDU_CLIENT_BASEURI",
+                        "value": "[parameters('KUDU_CLIENT_BASEURI')]"
+                    },
+                    {
+                        "name": "KUDU_CLIENT_USERNAME",
+                        "value": "[parameters('KUDU_CLIENT_USERNAME')]"
+                    },
+                    {
+                        "name": "KUDU_CLIENT_PASSWORD",
+                        "value": "[parameters('KUDU_CLIENT_PASSWORD')]"
+                    }
+                ]
+              }
+            }
+          ],
+          "osType": "Linux",
+          "volumes": [
+            {
+              "name": "gitrepo1",
+              "gitRepo": {
+                "repository": "https://github.com/markheath/aspnet-core-cake"
+              }
+            }
+          ]
+        }
+      }
+    ]
+}

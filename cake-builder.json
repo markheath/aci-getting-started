@@ -52,7 +52,6 @@
               "name": "[variables('container1name')]",
               "properties": {
                 "image": "[variables('container1image')]",
-                "command": ["[parameters('commandLine')]"],
                 "resources": {
                   "requests": {
                     "cpu": 1,
@@ -88,7 +87,8 @@
             {
               "name": "gitrepo1",
               "gitRepo": {
-                "repository": "https://github.com/markheath/aspnet-core-cake"
+                "repository": "https://github.com/markheath/aspnet-core-cake",
+                "directory": "."
               }
             }
           ]

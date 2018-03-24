@@ -64,5 +64,8 @@ az group deployment create `
 # check the logs for this container group
 az container logs -n $containerGroupName -g $resourceGroup 
 
+# delete just the container
+az container delete -n $containerGroupName -g $resourceGroup -y
+
 # delete the resource group including the container group
 az group delete -n $resourceGroup -y

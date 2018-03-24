@@ -29,7 +29,7 @@
         },
         "commandLine": {
             "type": "string",
-            "defaultValue": "./build.sh -Target=Default --settings_skipverification=true",
+            "defaultValue": "chmod 755 ./build.sh && ./build.sh -Target=Default --settings_skipverification=true",
             "metadata": {
                 "description": "Password for Kudu deployment."
             }

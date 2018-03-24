@@ -42,7 +42,7 @@
     },
     "resources": [
       {
-        "name": "volume-demo-gitrepo",
+        "name": "[parameters('containerGroupName')]",
         "type": "Microsoft.ContainerInstance/containerGroups",
         "apiVersion": "2018-02-01-preview",
         "location": "[resourceGroup().location]",
@@ -83,6 +83,7 @@
             }
           ],
           "osType": "Linux",
+          "restartPolicy": "Never",
           "volumes": [
             {
               "name": "gitrepo1",

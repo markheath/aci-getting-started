@@ -51,14 +51,15 @@ function LocalDockerTest {
 Start-Process https://$appName.azurewebsites.net
 
 # instead we'll deploy using an ARM template
+$containerGroupName = "cakebuilder"
 az group deployment create `
     -n TestDeployment -g $resourceGroup `
     --template-file "cake-builder.json" `
     --parameters "KUDU_CLIENT_BASEURI=https://$appName.scm.azurewebsites.net" `
     --parameters "KUDU_CLIENT_USERNAME=$user" `
     --parameters "KUDU_CLIENT_PASSWORD=$pass" `
-    --parameters "containerGroupName=$containerGroupName" `
-    --parameters commandLine='./build.sh -Target=Default --settings_skipverification=true' `
+    --parameters "containerGroupName=$containerGroupName"
+#    --parameters commandLine='./build.sh -Target=Default --settings_skipverification=true'
 
 # check the logs for this container group
 az container logs -n $containerGroupName -g $resourceGroup 

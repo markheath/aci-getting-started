@@ -52,6 +52,11 @@
               "name": "[variables('container1name')]",
               "properties": {
                 "image": "[variables('container1image')]",
+                "command": [
+                    "/bin/bash",
+                    "-c",
+                    "[parameters('commandLine')]"
+                ],
                 "resources": {
                   "requests": {
                     "cpu": 1,

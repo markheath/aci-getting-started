@@ -1,7 +1,7 @@
 
 # create a resource group
 $resourceGroup = "AciGitDemo"
-$location = "westeurope"
+$location = "westeurope" #"westcentralus"
 az group create -n $resourceGroup -l $location
 
 # we want our ACI container to deploy to a web app, so let's create an app service plan...
@@ -18,9 +18,6 @@ $user = az webapp deployment list-publishing-profiles -n $appName -g $resourceGr
 
 $pass = az webapp deployment list-publishing-profiles -n $appName -g $resourceGroup `
     --query "[?publishMethod=='MSDeploy'].userPWD" -o tsv
-
-# enable run from zip deployment technique
-az webapp config appsettings set -n $appName -g $resourceGroup --settings WEBSITE_USE_ZIP=1
 
 function CreateContainerCli  {
     # currently the az container create command doesn't support mounting git repos
@@ -48,7 +45,6 @@ function LocalDockerTest {
         markheath/cakebuilder:0.1
 }
 
-Start-Process https://$appName.azurewebsites.net
 
 # instead we'll deploy using an ARM template
 $containerGroupName = "cakebuilder"
@@ -60,6 +56,16 @@ az group deployment create `
     --parameters "KUDU_CLIENT_PASSWORD=$pass" `
     --parameters "containerGroupName=$containerGroupName"
 #    --parameters commandLine='./build.sh -Target=Default --settings_skipverification=true'
+
+# enable run from zip deployment technique (currently more reliable if we set it after our first upload to sitepackages)
+az webapp config appsettings set -n $appName -g $resourceGroup --settings WEBSITE_USE_ZIP=1
+
+# see what's in Kudu
+Start-Process https://$appName.scm.azurewebsites.net
+
+# see if the deploy worked
+Start-Process https://$appName.azurewebsites.net
+
 
 # check the logs for this container group
 az container logs -n $containerGroupName -g $resourceGroup 

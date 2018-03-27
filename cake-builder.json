@@ -31,7 +31,7 @@
             "type": "string",
             "defaultValue": "chmod 755 ./build.sh && ./build.sh -Target=Default --settings_skipverification=true",
             "metadata": {
-                "description": "Password for Kudu deployment."
+                "description": "Command line to run on container start."
             }
 
         }

@@ -42,6 +42,12 @@ az container logs -g $resourceGroup -n $containerGroupName
 
 az container show -g $resourceGroup -n $containerGroupName --query provisioningState
 
+az storage file list -s $shareName -o table
+
+$downloadThumbnailPath = "C:\Users\markh\Downloads\thumb.png"
+az storage file download -s $shareName -p "thumb.png" --dest $downloadThumbnailPath
+Start-Process $downloadThumbnailPath
+
 #az container delete -g $resourceGroup -n $containerGroupName
 
 # delete the resource group (file share and container group)

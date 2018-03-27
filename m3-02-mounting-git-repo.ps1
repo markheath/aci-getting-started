@@ -28,10 +28,10 @@ function CreateContainerCli  {
     az container create `
         -g $resourceGroup `
         -n $containerGroupName `
-        -e KUDU_CLIENT_BASEURI=https://$appName.scm.azurewebsites.net KUDU_CLIENT_USERNAME=$user KUDU_CLIENT_PASSWORD=$pass `
+        --image markheath/cakebuilder `
         --gitrepo-repository https://github.com/markheath/aspnet-core-cake `
         --gitrepo-mount-path "/src" `
-        --image markheath/cakebuilder `
+        -e KUDU_CLIENT_BASEURI=https://$appName.scm.azurewebsites.net KUDU_CLIENT_USERNAME=$user KUDU_CLIENT_PASSWORD=$pass `
         --restart-policy never `
         --command-line "./build.sh -Target=Default --settings_skipverification=true"
 }

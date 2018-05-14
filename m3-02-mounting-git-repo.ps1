@@ -58,7 +58,7 @@ az group deployment create `
 #    --parameters commandLine='./build.sh -Target=Default --settings_skipverification=true'
 
 # enable run from zip deployment technique (currently more reliable if we set it after our first upload to sitepackages)
-az webapp config appsettings set -n $appName -g $resourceGroup --settings WEBSITE_USE_ZIP=1
+az webapp config appsettings set -n $appName -g $resourceGroup --settings WEBSITE_RUN_FROM_ZIP=1
 
 # see what's in Kudu
 Start-Process https://$appName.scm.azurewebsites.net

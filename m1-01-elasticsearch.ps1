@@ -2,11 +2,11 @@
 # install following instructions from here:
 # https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest
 # then login:
-# az login
+az login
 # see which subscription is selected
 # az account show --query name -o tsv
 # select the subscription you want to use
-# az account set -s "MySub"
+az account set -s "MySub"
 
 # create a resource group
 $resourceGroup = "AciElasticSearchDemo"

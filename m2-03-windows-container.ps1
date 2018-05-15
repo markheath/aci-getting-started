@@ -5,8 +5,13 @@ az group create -n $resourceGroup -l $location
 
 # create our container running a Windows ASP.NET Core application
 $containerGroupName = "miniblog-win"
-az container create -g $resourceGroup -n $containerGroupName --image markheath/miniblogcore:v1 `
-    --ip-address public --dns-name-label miniblog-win --os-type windows --memory 2 --cpu 2 --restart-policy OnFailure
+az container create -g $resourceGroup -n $containerGroupName `
+    --image markheath/miniblogcore:v1 `
+    --ip-address public `
+    --dns-name-label miniblog-win `
+    --os-type windows `
+    --memory 2 --cpu 2 `
+    --restart-policy OnFailure
 
 # get its domain name:
 $fqdn = az container show -g $resourceGroup -n $containerGroupName --query ipAddress.fqdn -o tsv

@@ -9,7 +9,7 @@ $dnsNameLabel = "wordpressaci"
 $mySqlPassword = "My5q1P@s5w0rd!"
 
 az group deployment create `
-    -n TestDeployment -g $resourceGroup `
+    -n "WordPressDeployment" -g $resourceGroup `
     --template-file "aci-wordpress.json" `
     --parameters "mysqlPassword=$mySqlPassword" `
     --parameters "containerGroupName=$containerGroupName" `

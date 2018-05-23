@@ -23,12 +23,6 @@
             }
         }
     },
-    "variables": {
-      "container1name": "front-end",
-      "container1image": "wordpress",
-      "container2name": "back-end",
-      "container2image": "mysql"
-    },
     "resources": [
       {
         "name": "[parameters('containerGroupName')]",
@@ -38,9 +32,9 @@
         "properties": {
           "containers": [
             {
-                "name": "[variables('container1name')]",
+                "name": "front-end",
                 "properties": {
-                  "image": "[variables('container1image')]",
+                  "image": "wordpress",
                   "resources": {
                     "requests": {
                       "cpu": 1,
@@ -65,9 +59,9 @@
                 }
               },
             {
-                "name": "[variables('container2name')]",
+                "name": "back-end",
                 "properties": {
-                  "image": "[variables('container2image')]",
+                  "image": "mysql",
                   "resources": {
                     "requests": {
                       "cpu": 1,

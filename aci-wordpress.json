@@ -61,7 +61,7 @@
             {
                 "name": "back-end",
                 "properties": {
-                  "image": "mysql",
+                  "image": "mysql:5.7",
                   "resources": {
                     "requests": {
                       "cpu": 1,

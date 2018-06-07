@@ -20,10 +20,15 @@ az container list -g $resourceGroup -o table
 az container show -g $resourceGroup -n $containerGroupName `
         --query ipAddress.fqdn -o tsv
 
+# view the logs for the back end container
 az container logs -g $resourceGroup -n $containerGroupName --container-name "back-end"
 
+# run a bash session on the front end container
 az container exec -g $resourceGroup -n $containerGroupName --container-name "front-end" `
     --exec-command "/bin/bash"
+
+# export details of this container group to a yaml file
+az container export -g $resourceGroup -n $containerGroupName -f "aci-wordpress.yaml"
 
 az container delete -g $resourceGroup -n $containerGroupName --yes
 
